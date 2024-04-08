@@ -1,42 +1,31 @@
-import React, { useEffect, useState, } from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
-import * as Font from 'expo-font';
 
 function Square({value, border }) {
   return (
     <View style={[styles.square, border]}>
-      <View style={styles.squareBox}>
         <Text style={styles.squareText}>{value}</Text>
-      </View>
       </View>
   );
 }
 
 export default function App() {
-  const [fontLoaded, setFontLoaded] = useState(false);
 
-    useEffect(() => {
-      const loadFont = async () => {
-        await Font.loadAsync({
-          'TicTacToe': require('./assets/fonts/TicTacToe.ttf'),
-        });
-        setFontLoaded(true);
-      };
+    // useEffect(() => {
+        const renderSquare = (obj) => {
+        
+            const border = [];
+            if (obj.key % 3 !== 0) { 
+                border.push(styles.borderLeft);
+            }
+            if (obj.key > 2) {
+                border.push(styles.borderTop);
+            }
+            return <Square value={obj.value} border={border} />;
+          };
 
-      loadFont()
-    }, []);
-    const renderSquare = (obj) => {
-    
-        const border = [];
-        if (obj.key % 3 !== 0) { 
-            border.push(styles.borderLeft);
-        }
-        if (obj.key > 2) {
-            border.push(styles.borderTop);
-        }
-        return <Square value={obj.value} border={border} />;
-      };
-
+        // renderSquare()
+    // })
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.row}>
@@ -64,65 +53,34 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
-    fontFamily: 'TicTacToe'
+    justifyContent: 'center'
   },
   row: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    marginRight: 15,
-    marginLeft: 15,
-    // backgroundColor: '#E06D83'
+    justifyContent: 'center'
   },
   square: {
     flex: 1,
     width: 100,
     height: 100,
-    borderWidth: 3,
+    borderWidth: 1,
+    borderColor: '#999',
     borderTopWidth: 0,
     borderBottomWidth: 0,
-    borderLeftWidth: 0,
-    borderRightWidth: 0,
-  },
-  squareBox: {
-    flex: 1,
-    backgroundColor: '#f9f9f9',
-    borderWidth: 0,
-    borderColor: '#d0d0d0',
-    margin: 5,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.32,
-    shadowRadius: 2.22,
     alignContent: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   squareText: {
-    alignSelf:'center',
-    fontFamily: 'TicTacToe',
-    fontSize: 50,
-    fontWeight: 'bold',
-    color: 'black',
-    textAlign: 'center',
+    alignSelf:'center'
   },
   borderLeft: {
-    borderLeftWidth: 6,
-    borderColor: '#000',
-    fontFamily: 'TicTacToe',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.32,
-    shadowRadius: 2.22,
+    borderLeftWidth: 1,
+    borderColor: '#999'
   },
   borderTop: {
-    borderTopWidth: 6,
-    borderColor: '#000',
-    fontFamily: 'TicTacToe',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.32,
-    shadowRadius: 2.22,
+    borderTopWidth: 1,
+    borderColor: '#999'
   }
 });
